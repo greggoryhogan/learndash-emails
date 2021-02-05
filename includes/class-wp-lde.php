@@ -117,9 +117,6 @@ class Wp_Lde {
             'learndash-emails'
         );
 
-        //Optional: If you're using a private repository, specify the access token like this:
-        $myUpdateChecker->setAuthentication('aa411a6d81c286d24263211d06eecd5429b65c1b');
-
         //Optional: Set the branch that contains the stable release.
         $myUpdateChecker->setBranch('master');
 
