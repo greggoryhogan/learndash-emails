@@ -73,6 +73,7 @@ class Wp_Lde {
 
 		$this->load_dependencies();
 		$this->set_github_updater();
+		$this->define_public_hooks();
 
 	}
 
@@ -100,6 +101,8 @@ class Wp_Lde {
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-wp-lde-loader.php';
 
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-wp-lde-public.php';
+
 		$this->loader = new Wp_Lde_Loader();
 
 	}
@@ -122,6 +125,12 @@ class Wp_Lde {
 
 	}
 
+	private function define_public_hooks() {
+		$plugin_public = new Wp_Lde_Public( $this->get_plugin_name(), $this->get_version());
+		$this->loader->add_action( 'init', $plugin_public, 'create_plugin_cpt' );
+		$this->loader->add_action( 'save_post', $plugin_public, 'save_lde_email_cpt_metaboxes' );
+		$this->loader->add_action( 'template_redirect', $plugin_public, 'cpt_redirects' );
+	}
 	
 	/**
 	 * Run the loader to execute all of the hooks with WordPress.
